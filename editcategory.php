@@ -2,22 +2,33 @@
 
 include "connection.php";
 
-$categoryid = $_GET['categoryid']; // i
 
-$sql = "SELECT * FROM categories WHERE CategoryID = ?";
-$stmt = $conn->prepare($sql);
+if (isset($_GET['categoryid'])){
+    $categoryid = $_GET['categoryid']; // i
 
-if ($stmt === false){
-    die("Connection failed: " . $conn->connect_error);
+    $sql = "SELECT * FROM categories WHERE CategoryID = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt === false){
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $stmt->bind_param("i", $categoryid);
+
+    if ($stmt->execute() === false){
+        echo "<script type='text/javascript'>alert('An error has been encountered: ".$conn->error."');</script>";
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0){
+        echo "<script type='text/javascript'>alert('Category does not exist!'); window.location.href = 'categories.php';</script>";
+    }
+
+    $row = $result->fetch_assoc();
+}else{
+    echo "<script type='text/javascript'>alert('Invalid Category'); window.location.href = 'categories.php';</script>";
 }
-
-$stmt->bind_param("i", $categoryid);
-
-if ($stmt->execute() === false){
-    echo "<script type='text/javascript'>alert('An error has been encountered: ".$conn->error."');</script>";
-}
-
-$result = $stmt->get_result()->fetch_assoc();
 
 if(isset($_POST['submitdata'])){
     $categoryname = $_POST['categoryname']; // s
@@ -56,10 +67,10 @@ $conn->close();
     <br>
     <form action="" method="POST">
         <label for="categoryname">Category Name </label><br>
-        <input type="text" name="categoryname" value="<?php echo $result['CategoryName']?>" id="categoryname" />
+        <input type="text" name="categoryname" value="<?php echo $row['CategoryName']?>" id="categoryname" />
         <br><br>
         <label for="description">Description</label><br>
-        <textarea name="description" id="description" rows="5"><?php echo $result['Description']?></textarea><br><br>
+        <textarea name="description" id="description" rows="5"><?php echo $row['Description']?></textarea><br><br>
         <button type="submit" name="submitdata">Save Category</button>
         <a href="categories.php">Cancel</a>
     </form>
