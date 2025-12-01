@@ -51,7 +51,11 @@ include "connection.php";
                 <td><?php echo $row["CategoryID"] ?></td>
                 <td><?php echo $row["CategoryName"] ?></td>
                 <td><?php echo $row["Description"] ?></td>
-                <td><a href="editcategory.php?categoryid=<?php echo $row["CategoryID"] ?>">Edit</a></td>
+                <td>
+                    <a href="editcategory.php?categoryid=<?php echo $row["CategoryID"] ?>">Edit</a>
+                    &nbsp;
+                    <a href="deletecategory.php?categoryid=<?php echo $row["CategoryID"] ?>">Delete</a>
+                </td>
             </tr>
         </tbody>
         <?php } ?>
