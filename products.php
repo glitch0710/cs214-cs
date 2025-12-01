@@ -31,6 +31,10 @@ $stmt->execute();
         <button type="submit">Search</button>
     </form>
     <br><br>
+    <a href="index.php">Go Back</a>
+    &emsp;
+    <a href="addproduct.php">Add New Product</a>
+    <br><br>
     <table border=1>
         <thead>
             <th>Product ID</th>

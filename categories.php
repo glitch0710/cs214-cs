@@ -51,13 +51,15 @@ include "connection.php";
                 <td><?php echo $row["CategoryID"] ?></td>
                 <td><?php echo $row["CategoryName"] ?></td>
                 <td><?php echo $row["Description"] ?></td>
-                <td><a href="#">Edit Category</a></td>
+                <td><a href="#">Edit</a></td>
             </tr>
         </tbody>
         <?php } ?>
     </table>
     <br><br>
-    <button>Add Category</button>
+    <a href="index.php">Go Back</a>
+    &emsp;
+    <a href="addcategory.php">Add Category</a>
     <?php
         }
     
